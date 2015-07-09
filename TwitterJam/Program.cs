@@ -1,22 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tweetinvi;
+using LinqToTwitter;
 
 namespace TwitterJam
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static List<Status> GetMostRecent200HomeTimeLine(SingleUserAuthorizer authorizer)
         {
-           TwitterCredentials.SetCredentials("3366075040-QeUE25ewf9lzf7JlILxI01oGm9E8941oAEOLoM2", "ei8l2IzjXGmrPpL01hQnV41CZn2Gdol28FkLAsvxtca4u",
-               "lO1Wvm0GejcIpMS3d4dzZvGNd ", "fuWWnbjhm37k2alOSky1MUwrm7JonDiqdVkc8wGUv4R3GdiEIg");
+            var twitterContext = new TwitterContext(authorizer);
 
-           var loggedUser = User.GetLoggedUser();
+            var tweets = from tweet in twitterContext.Status
+                where tweet.Type == StatusType.Home &&
+                      tweet.Count == 200
+                select tweet;
 
-           var settings = loggedUser.GetAccountSettings();
+            return tweets.ToList();
+        }
+
+        private static void Main(string[] args)
+        {
+            var authorizer = new SingleUserAuthorizer
+            {
+                CredentialStore =
+                    new SingleUserInMemoryCredentialStore
+                    {
+                        ConsumerKey =
+                            "evRKMja4psyaHoevCVMPlCbHm",
+                        ConsumerSecret =
+                            "W72GjBqSZ5fQ6uVDMkMYpoDKfiqwAaOyLNMczZJKdKX3yk35Ev",
+                        AccessToken =
+                            "3366075040-AtwlMptYENBFVmdDtU8A08EuyoNuMRFAQmZTzzq",
+                        AccessTokenSecret =
+                            "ouBcNL2hawU7JUQPjrWJ1Ehai7sh3HiUUycLrXl2E2YB0"
+                    }
+            };
+
+            GetMostRecent200HomeTimeLine(authorizer).ForEach(t =>
+                Console.WriteLine(t.Text));
         }
     }
 }
