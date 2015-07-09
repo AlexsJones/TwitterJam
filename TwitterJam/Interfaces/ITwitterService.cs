@@ -2,11 +2,11 @@
 
 namespace TwitterJam.Interfaces
 {
-    public interface ITwitterService<T>
+    public interface ITwitterService
     {
         void Authorise(string consumerKey, string consumerSecret,
             string accessToken, string accessTokenSecret);
 
-        List<T> FetchTimeline();
+        ITwitterStatusFeed FetchTimeLine();
     }
 }

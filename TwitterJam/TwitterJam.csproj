@@ -74,10 +74,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Implementation\IoC.cs" />
+    <Compile Include="Implementation\LttPlace.cs" />
     <Compile Include="Implementation\LttService.cs" />
+    <Compile Include="Implementation\LttStatusFeed.cs" />
     <Compile Include="Implementation\LttStatusInformation.cs" />
     <Compile Include="Implementation\LttUser.cs" />
     <Compile Include="Interfaces\ITwitterPlace.cs" />
+    <Compile Include="Interfaces\ITwitterStatusFeed.cs" />
     <Compile Include="Interfaces\ITwitterStatusInformation.cs" />
     <Compile Include="Interfaces\ITwitterService.cs" />
     <Compile Include="Interfaces\ITwitterUser.cs" />

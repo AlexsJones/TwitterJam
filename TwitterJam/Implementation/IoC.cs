@@ -14,12 +14,19 @@ namespace TwitterJam.Implementation
 
         public RegisterThirdPartyDependencies RegistrationDelegate = null;
 
-
         ContainerBuilder GetContainerBuilder()
         {
             var containerBuilder = new ContainerBuilder();
 
-            containerBuilder.RegisterType<ITwitterUser>().As<LttUser>();
+            containerBuilder.RegisterType<LttPlace>().As<ITwitterPlace>();
+
+            containerBuilder.RegisterType<LttUser>().As<ITwitterUser>();
+
+            containerBuilder.RegisterType<LttStatusInformation>().As<ITwitterStatusInformation>();
+
+            containerBuilder.RegisterType<LttStatusFeed>().As<ITwitterStatusFeed>();
+
+            containerBuilder.RegisterType<LttService>().As<ITwitterService>();
 
             return containerBuilder;
         }

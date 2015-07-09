@@ -9,9 +9,15 @@ using TwitterJam.Interfaces;
 
 namespace TwitterJam.Implementation
 {
-    public class LttService : ITwitterService<LttStatusInformation>
+    public class LttService : ITwitterService
     {
         private SingleUserAuthorizer _authorizer;
+        private readonly ITwitterStatusFeed _statusFeed;
+
+        public LttService(ITwitterStatusFeed statusFeed)
+        {
+            _statusFeed = statusFeed;
+        }
 
         public void Authorise(string consumerKey, string consumerSecret,
             string accessToken, string accessTokenSecret)
@@ -29,10 +35,9 @@ namespace TwitterJam.Implementation
             };
         }
 
-        public List<LttStatusInformation> FetchTimeline()
+        public ITwitterStatusFeed FetchTimeLine()
         {
-            List<LttStatusInformation> statusInformation
-                = new List<LttStatusInformation>();
+  
 
             var twitterContext = new TwitterContext(_authorizer);
 
@@ -43,7 +48,7 @@ namespace TwitterJam.Implementation
 
             foreach (var tweet in tweets)
             {
-                statusInformation.Add(
+                _statusFeed.AddItem(
                     new LttStatusInformation
                     {
                         Count = tweet.Count,
@@ -77,7 +82,7 @@ namespace TwitterJam.Implementation
                     }
                     );
             }
-            return statusInformation;
+            return _statusFeed;
         }
     }
 }
