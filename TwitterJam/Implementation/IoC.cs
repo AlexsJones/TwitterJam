@@ -28,7 +28,7 @@ namespace TwitterJam.Implementation
 
             containerBuilder.RegisterType<LttService>().As<ITwitterService>();
 
-            return containerBuilder;
+            return containerBuilder; 
         }
 
         public IContainer GetContainer()

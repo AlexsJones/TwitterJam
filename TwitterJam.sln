@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterJam", "TwitterJam\TwitterJam.csproj", "{9EC8E892-63D5-441F-8088-7D85BFBF8806}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterJamTests", "TwitterJamTests\TwitterJamTests.csproj", "{5CD0143A-F6EC-4DC4-9A41-165611F202EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{9EC8E892-63D5-441F-8088-7D85BFBF8806}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9EC8E892-63D5-441F-8088-7D85BFBF8806}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9EC8E892-63D5-441F-8088-7D85BFBF8806}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CD0143A-F6EC-4DC4-9A41-165611F202EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CD0143A-F6EC-4DC4-9A41-165611F202EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CD0143A-F6EC-4DC4-9A41-165611F202EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CD0143A-F6EC-4DC4-9A41-165611F202EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using LinqToTwitter;
 using TwitterJam.Interfaces;
 
@@ -11,8 +6,8 @@ namespace TwitterJam.Implementation
 {
     public class LttService : ITwitterService
     {
-        private SingleUserAuthorizer _authorizer;
         private readonly ITwitterStatusFeed _statusFeed;
+        private SingleUserAuthorizer _authorizer;
 
         public LttService(ITwitterStatusFeed statusFeed)
         {
@@ -37,17 +32,43 @@ namespace TwitterJam.Implementation
 
         public ITwitterStatusFeed FetchTimeLine()
         {
-  
-
             var twitterContext = new TwitterContext(_authorizer);
 
             var tweets = from tweet in twitterContext.Status
-                         where tweet.Type == StatusType.Home &&
-                               tweet.Count == 200
-                         select tweet;
+                where tweet.Type == StatusType.Home &&
+                      tweet.Count == 200
+                select tweet;
 
             foreach (var tweet in tweets)
             {
+                var place = new LttPlace
+                {
+                    Country = tweet.Place.Country,
+                    CountryCode = tweet.Place.CountryCode,
+                    FullName = tweet.Place.FullName,
+                    Id = tweet.Place.ID,
+                    PlaceType = tweet.Place.PlaceType
+                };
+
+                var user = new LttUser
+                {
+                    Count = tweet.User.Count,
+                    CreatedAt = tweet.User.CreatedAt,
+                    Cursor = tweet.User.Cursor,
+                    FavoritesCount = tweet.User.FavoritesCount,
+                    FollowRequestSent = tweet.User.FollowRequestSent,
+                    FollowersCount = tweet.User.FollowersCount,
+                    Following = tweet.User.Following,
+                    FriendsCount = tweet.User.FriendsCount,
+                    GeoEnabled = tweet.User.GeoEnabled,
+                    Location = tweet.User.Location,
+                    Name = tweet.User.Name,
+                    ScreenName = tweet.User.ScreenName,
+                    UserId = tweet.User.UserID,
+                    UserIdList = tweet.User.UserIdList,
+                    UserIdResponse = tweet.User.UserIDResponse
+                };
+
                 _statusFeed.AddItem(
                     new LttStatusInformation
                     {
@@ -66,7 +87,7 @@ namespace TwitterJam.Implementation
                         InReplyToStatusId = tweet.InReplyToStatusID,
                         InReplyToUserId = tweet.InReplyToUserID,
                         Lang = tweet.Lang,
-                   //     Place = tweet.Place,
+                        Place = place,
                         PossiblySensitive = tweet.PossiblySensitive,
                         RetweetCount = tweet.RetweetCount,
                         Retweeted = tweet.Retweeted,
@@ -76,7 +97,7 @@ namespace TwitterJam.Implementation
                         StatusId = tweet.StatusID,
                         Text = tweet.Text,
                         TweetIDs = tweet.TweetIDs,
-                       // User = tweet.User,
+                        User = user,
                         UserId = tweet.UserID,
                         Users = tweet.Users
                     }

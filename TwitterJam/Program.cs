@@ -13,8 +13,10 @@ namespace TwitterJam
 
             var service = container.Resolve<ITwitterService>();
 
-            service.Authorise("evRKMja4psyaHoevCVMPlCbHm", "W72GjBqSZ5fQ6uVDMkMYpoDKfiqwAaOyLNMczZJKdKX3yk35Ev",
-                "3366075040-AtwlMptYENBFVmdDtU8A08EuyoNuMRFAQmZTzzq", "ouBcNL2hawU7JUQPjrWJ1Ehai7sh3HiUUycLrXl2E2YB0");
+            service.Authorise("evRKMja4psyaHoevCVMPlCbHm",
+                "W72GjBqSZ5fQ6uVDMkMYpoDKfiqwAaOyLNMczZJKdKX3yk35Ev",
+                "3366075040-AtwlMptYENBFVmdDtU8A08EuyoNuMRFAQmZTzzq", 
+                "ouBcNL2hawU7JUQPjrWJ1Ehai7sh3HiUUycLrXl2E2YB0");
 
             var timeline = service.FetchTimeLine();
 
