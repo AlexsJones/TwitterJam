@@ -5,6 +5,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using TwitterJam.Implementation;
 using TwitterJam.Interfaces;
+using NSubstitute;
+using System.Linq;
 
 namespace TwitterJamTests
 {
@@ -42,7 +44,7 @@ namespace TwitterJamTests
         }
 
         [Test]
-        public void TestContainer()
+        public void TestResolutionSuccess()
         {
             _container.Resolve<ITwitterService>().Should().NotBeNull();
 
@@ -55,7 +57,22 @@ namespace TwitterJamTests
             Action a = () => _container.Resolve<IDisposable>();
 
             a.ShouldThrow<Autofac.Core.Registration.ComponentNotRegisteredException>();
-
         }
+        [Test]
+        public void TestStatusFeedMock()
+        {
+            var statusFeed = _container.Resolve<ITwitterStatusFeed>();
+
+            var mockedItem = Substitute.For<ITwitterStatusInformation>();
+
+            mockedItem.ScreenName.Returns("MockedItem");
+
+            statusFeed.AddItem(mockedItem);
+
+            statusFeed.StatusInformation.Count.Should().Be(1);
+
+            statusFeed.StatusInformation.First().ScreenName.Should().Be("MockedItem");
+        }
+
     }
 }
