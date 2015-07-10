@@ -48,5 +48,14 @@ namespace TwitterJamTests
 
             _container.Resolve<ITwitterService>().Should().BeOfType<LttService>();
         }
+
+        [Test]
+        public void TestResolutionFailure()
+        {
+            Action a = () => _container.Resolve<IDisposable>();
+
+            a.ShouldThrow<Autofac.Core.Registration.ComponentNotRegisteredException>();
+
+        }
     }
 }
