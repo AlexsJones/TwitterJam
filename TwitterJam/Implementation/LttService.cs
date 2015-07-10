@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using LinqToTwitter;
 using TwitterJam.Interfaces;
 
@@ -32,6 +33,11 @@ namespace TwitterJam.Implementation
 
         public ITwitterStatusFeed FetchTimeLine()
         {
+            if (_authorizer == null)
+            {
+                throw new Exception("Not authorised");
+            }
+
             var twitterContext = new TwitterContext(_authorizer);
 
             var tweets = from tweet in twitterContext.Status

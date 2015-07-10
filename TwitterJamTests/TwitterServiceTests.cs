@@ -58,6 +58,7 @@ namespace TwitterJamTests
 
             a.ShouldThrow<Autofac.Core.Registration.ComponentNotRegisteredException>();
         }
+
         [Test]
         public void TestStatusFeedMock()
         {
@@ -74,5 +75,14 @@ namespace TwitterJamTests
             statusFeed.StatusInformation.First().ScreenName.Should().Be("MockedItem");
         }
 
+        [Test]
+        public void TestAuthNotInitialized()
+        {
+           var service = _container.Resolve<ITwitterService>();
+
+            Action c = () => { service.FetchTimeLine(); };
+
+            c.ShouldThrow<Exception>();
+        }
     }
 }
