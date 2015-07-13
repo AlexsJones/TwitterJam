@@ -26,6 +26,8 @@ namespace TwitterJam.Implementation
 
             containerBuilder.RegisterType<LttStatusFeed>().As<ITwitterStatusFeed>();
 
+            containerBuilder.RegisterType<LttAuthorizer>().As<ITwitterAuthorizer>();
+
             containerBuilder.RegisterType<LttService>().As<ITwitterService>();
 
             return containerBuilder; 

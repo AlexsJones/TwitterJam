@@ -7,6 +7,7 @@ using TwitterJam.Implementation;
 using TwitterJam.Interfaces;
 using NSubstitute;
 using System.Linq;
+using TwitterJamTests.Mocks;
 
 namespace TwitterJamTests
 {
@@ -28,12 +29,14 @@ namespace TwitterJamTests
 
                 c.RegisterType<LttStatusInformation>().As<ITwitterStatusInformation>();
 
+                c.RegisterType<LttAuthorizer>().As<ITwitterAuthorizer>();
+
                 c.RegisterType<LttStatusFeed>().As<ITwitterStatusFeed>();
 
                 c.RegisterType<LttService>().As<ITwitterService>();
 
             };
-   
+
             _container = ioc.GetContainer();
         }
 
@@ -78,12 +81,39 @@ namespace TwitterJamTests
         [Test]
         public void TestAuthNotInitialized()
         {
-           var service = _container.Resolve<ITwitterService>();
+            var service = _container.Resolve<ITwitterService>();
 
             Action c = () => { service.FetchTimeLine(); };
 
             c.ShouldThrow<Exception>();
         }
 
+        [Test]
+        public void TestAuthInitialized()
+        {
+            var ioc = new IoC();
+
+            ioc.RegistrationDelegate += (c) =>
+            {
+                c.RegisterType<LttPlace>().As<ITwitterPlace>();
+
+                c.RegisterType<LttUser>().As<ITwitterUser>();
+
+                c.RegisterType<LttStatusInformation>().As<ITwitterStatusInformation>();
+
+                c.RegisterType<MockAuthorzier>().As<ITwitterAuthorizer>();
+
+                c.RegisterType<LttStatusFeed>().As<ITwitterStatusFeed>();
+
+                c.RegisterType<LttService>().As<ITwitterService>();
+
+            };
+
+            _container = ioc.GetContainer();
+
+            Action d = () => { _container.Resolve<ITwitterService>().FetchTimeLine(); };
+
+            d.ShouldThrow<Exception>();
+        }
     }
 }

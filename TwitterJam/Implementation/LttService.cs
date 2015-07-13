@@ -8,37 +8,32 @@ namespace TwitterJam.Implementation
     public class LttService : ITwitterService
     {
         private readonly ITwitterStatusFeed _statusFeed;
-        private SingleUserAuthorizer _authorizer;
+        private ITwitterAuthorizer _authorizer;
+        private bool isAuthorized = false;
 
-        public LttService(ITwitterStatusFeed statusFeed)
+        public LttService(ITwitterStatusFeed statusFeed,
+            ITwitterAuthorizer authorizer)
         {
             _statusFeed = statusFeed;
+            _authorizer = authorizer;
         }
 
         public void Authorise(string consumerKey, string consumerSecret,
             string accessToken, string accessTokenSecret)
         {
-            _authorizer = new SingleUserAuthorizer
-            {
-                CredentialStore =
-                    new SingleUserInMemoryCredentialStore
-                    {
-                        ConsumerKey = consumerKey,
-                        ConsumerSecret = consumerSecret,
-                        AccessToken = accessToken,
-                        AccessTokenSecret = accessTokenSecret
-                    }
-            };
+
+           isAuthorized  =  _authorizer.Authorise(consumerKey, consumerSecret, accessToken, accessTokenSecret);
+
         }
 
         public ITwitterStatusFeed FetchTimeLine()
         {
-            if (_authorizer == null)
+            if (!isAuthorized)
             {
-                throw new Exception("Not authorised");
+                throw new Exception("Not Authorized");
             }
 
-            var twitterContext = new TwitterContext(_authorizer);
+            var twitterContext = (TwitterContext)_authorizer.FetchContext();
 
             var tweets = from tweet in twitterContext.Status
                 where tweet.Type == StatusType.Home &&
