@@ -84,5 +84,6 @@ namespace TwitterJamTests
 
             c.ShouldThrow<Exception>();
         }
+
     }
 }
