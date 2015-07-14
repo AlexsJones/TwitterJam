@@ -29,8 +29,8 @@ namespace TwitterJam.Implementation
         public ITwitterStatusFeed FetchTimeLine()
         {
             if (!isAuthorized)
-            {
-                throw new Exception("Not Authorized");
+                {
+                    throw new Exception("Not Authorized");
             }
 
             var twitterContext = (TwitterContext)_authorizer.FetchContext();

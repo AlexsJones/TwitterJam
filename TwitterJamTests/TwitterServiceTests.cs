@@ -63,6 +63,19 @@ namespace TwitterJamTests
         }
 
         [Test]
+        public void TestStatusInformation()
+        {
+            var si = Substitute.For<ITwitterStatusInformation>();
+
+            si.Place = Substitute.For<ITwitterPlace>();
+
+            si.Place.Country.Returns("United Kingdom");
+
+            si.Place.Country.Should().Be("United Kingdom");
+
+        }
+
+        [Test]
         public void TestStatusFeedMock()
         {
             var statusFeed = _container.Resolve<ITwitterStatusFeed>();
