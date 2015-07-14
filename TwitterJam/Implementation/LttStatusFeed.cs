@@ -20,5 +20,10 @@ namespace TwitterJam.Implementation
         {
             StatusInformation.Add(statusItem);
         }
+
+        public void Dispose()
+        {
+           
+        }
     }
 }

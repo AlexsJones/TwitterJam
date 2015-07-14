@@ -16,7 +16,7 @@ namespace TwitterJamTests.Mocks
 
     public class MockAuthorzier : ITwitterAuthorizer
     {
-        public bool Authorise(string consumerKey, string consumerSecret, string accessToken, string accessTokenSecret)
+        public bool Authorize(string consumerKey, string consumerSecret, string accessToken, string accessTokenSecret)
         {
             return false;
         }

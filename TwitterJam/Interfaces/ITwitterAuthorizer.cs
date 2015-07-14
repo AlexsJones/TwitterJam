@@ -8,7 +8,7 @@ namespace TwitterJam.Interfaces
 {
     public interface ITwitterAuthorizer
     {
-        bool Authorise(string consumerKey, string consumerSecret,
+        bool Authorize(string consumerKey, string consumerSecret,
             string accessToken, string accessTokenSecret);
 
         IDisposable FetchContext();

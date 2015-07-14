@@ -18,27 +18,33 @@ namespace TwitterJam.Implementation
             _authorizer = authorizer;
         }
 
-        public void Authorise(string consumerKey, string consumerSecret,
+        public bool Authorise(string consumerKey, string consumerSecret,
             string accessToken, string accessTokenSecret)
         {
 
-           isAuthorized  =  _authorizer.Authorise(consumerKey, consumerSecret, accessToken, accessTokenSecret);
+            isAuthorized = _authorizer.Authorize(consumerKey, consumerSecret, accessToken, accessTokenSecret);
 
+            return isAuthorized;
         }
 
         public ITwitterStatusFeed FetchTimeLine()
         {
             if (!isAuthorized)
-                {
-                    throw new Exception("Not Authorized");
+            {
+                throw new Exception("Not Authorized");
             }
 
-            var twitterContext = (TwitterContext)_authorizer.FetchContext();
+            var twitterContext = (LttContext)_authorizer.FetchContext();
 
             var tweets = from tweet in twitterContext.Status
-                where tweet.Type == StatusType.Home &&
-                      tweet.Count == 200
-                select tweet;
+                         where tweet.Type == StatusType.Home &&
+                               tweet.Count == 200
+                         select tweet;
+
+            if (tweets.FirstOrDefault() == null)
+            {
+                throw new Exception("Could not retrieve status feed");
+            }
 
             foreach (var tweet in tweets)
             {

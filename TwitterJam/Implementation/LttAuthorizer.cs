@@ -18,10 +18,10 @@ namespace TwitterJam.Implementation
             {
                 throw new Exception("Not Authorized");
             }
-            return new TwitterContext(_auth);
+            return new LttContext(_auth);
         }
 
-        public bool Authorise(string consumerKey, string consumerSecret,
+        public bool Authorize(string consumerKey, string consumerSecret,
             string accessToken, string accessTokenSecret)
         {
             _auth = new SingleUserAuthorizer

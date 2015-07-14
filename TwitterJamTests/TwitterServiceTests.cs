@@ -8,6 +8,7 @@ using TwitterJam.Interfaces;
 using NSubstitute;
 using System.Linq;
 using TwitterJamTests.Mocks;
+using LinqToTwitter;
 
 namespace TwitterJamTests
 {
@@ -127,6 +128,53 @@ namespace TwitterJamTests
             Action d = () => { _container.Resolve<ITwitterService>().FetchTimeLine(); };
 
             d.ShouldThrow<Exception>();
+        }
+
+        [Test]
+        public void TestMockedService()
+        {
+            var ioc = new IoC();
+
+
+            var mockedAuthorizer = Substitute.For<ITwitterAuthorizer>();
+
+            mockedAuthorizer.Authorize(
+                Arg.Any<string>(),
+                Arg.Any<string>(),
+               Arg.Any<string>(),
+               Arg.Any<string>()).ReturnsForAnyArgs(true);
+
+            var mockedTwitterContext = Substitute.For<LttContext>(
+                Substitute.For<IAuthorizer>()
+                );
+
+            mockedAuthorizer.FetchContext().ReturnsForAnyArgs(mockedTwitterContext);
+
+            ioc.RegistrationDelegate += (c) =>
+            {
+                c.RegisterType<LttPlace>().As<ITwitterPlace>();
+
+                c.RegisterType<LttUser>().As<ITwitterUser>();
+
+                c.RegisterType<LttStatusInformation>().As<ITwitterStatusInformation>();
+
+                c.Register(d => mockedAuthorizer.As<ITwitterAuthorizer>());
+
+                c.RegisterType<LttStatusFeed>().As<ITwitterStatusFeed>();
+
+                c.RegisterType<LttService>().As<ITwitterService>();
+
+            };
+
+            _container = ioc.GetContainer();
+
+            var service = _container.Resolve<ITwitterService>();
+
+            service.Authorise("Foo", "Bar", "A", "B").Should().BeTrue();
+
+            Action f = () => { service.FetchTimeLine(); };
+
+            f.ShouldThrow<Exception>();
         }
     }
 }

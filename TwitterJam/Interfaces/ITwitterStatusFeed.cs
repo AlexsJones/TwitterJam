@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TwitterJam.Interfaces
 {
-    public interface ITwitterStatusFeed
+    public interface ITwitterStatusFeed : IDisposable
     {
         List<ITwitterStatusInformation> StatusInformation { get; set; }
 
