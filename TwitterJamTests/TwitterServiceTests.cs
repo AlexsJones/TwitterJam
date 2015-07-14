@@ -103,7 +103,7 @@ namespace TwitterJamTests
         }
 
         [Test]
-        public void TestAuthInitialized()
+        public void TestAuthInitializedFake()
         {
             var ioc = new IoC();
 
@@ -115,7 +115,7 @@ namespace TwitterJamTests
 
                 c.RegisterType<LttStatusInformation>().As<ITwitterStatusInformation>();
 
-                c.RegisterType<MockAuthorzier>().As<ITwitterAuthorizer>();
+                c.RegisterType<FakeAuthorizer>().As<ITwitterAuthorizer>();
 
                 c.RegisterType<LttStatusFeed>().As<ITwitterStatusFeed>();
 

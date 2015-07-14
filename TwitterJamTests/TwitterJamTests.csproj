@@ -105,7 +105,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Mocks\MockAuthorzier.cs" />
+    <Compile Include="Fakes\FakeAuthorizer.cs" />
     <Compile Include="TwitterServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
