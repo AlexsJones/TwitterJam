@@ -7,14 +7,14 @@ using TwitterJam.Interfaces;
 
 namespace TwitterJamTests.Mocks
 {
-    public class MockContext : IDisposable
+    public class FakeContext : IDisposable
     {
 
         public void Dispose()
         {}
     }
 
-    public class MockAuthorzier : ITwitterAuthorizer
+    public class FakeAuthorizer : ITwitterAuthorizer
     {
         public bool Authorise(string consumerKey, string consumerSecret, string accessToken, string accessTokenSecret)
         {
@@ -23,7 +23,7 @@ namespace TwitterJamTests.Mocks
 
         public IDisposable FetchContext()
         {
-            return new MockContext { 
+            return new FakeContext { 
             
             };
         }
